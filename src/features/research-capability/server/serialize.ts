@@ -19,6 +19,46 @@ export function asNumber(value: unknown): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+export function asDateOnly(value: unknown): string | null {
+  const iso = asIso(value);
+  return iso ? iso.slice(0, 10) : null;
+}
+
+export function asStringArray(value: unknown): string[] {
+  if (value == null) return [];
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return [];
+    if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+      return trimmed
+        .slice(1, -1)
+        .split(",")
+        .map((part) => part.replace(/^"|"$/g, "").trim())
+        .filter(Boolean);
+    }
+    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+      try {
+        return asStringArray(JSON.parse(trimmed) as unknown);
+      } catch {
+        return [trimmed];
+      }
+    }
+    return [trimmed];
+  }
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => {
+      if (typeof item === "string") return item.trim();
+      if (item && typeof item === "object") {
+        const record = item as Record<string, unknown>;
+        const name = record.name ?? record.title ?? record.note ?? record.label;
+        return typeof name === "string" ? name.trim() : "";
+      }
+      return String(item).trim();
+    })
+    .filter(Boolean);
+}
+
 export function serializeRow(row: Record<string, unknown>): Record<string, unknown> {
   const next: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(row)) {

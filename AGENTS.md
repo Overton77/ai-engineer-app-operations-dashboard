@@ -21,7 +21,7 @@ This app is a research-and-capability proof surface. The first segment is **rese
 - **Packet artifacts** live under `research-ingestion-intents/pre-research/v2/<video_id>/<run_id>/`.
 - **Transcript objects** live at `ai-engineer-transcripts/ai-dot-engineer/<video_id>.txt`.
 
-Do not query learner tables from `aiengineerapp`. Do not mark pipeline finished from this app. Route handlers are the only server. Client data access goes through TanStack Query hooks.
+The **library** (`/research-capability/library`) is the finished-report reader; the catalog (`/research-capability`) is the operational pipeline surface. Do not query learner tables from `aiengineerapp`. Do not mark pipeline finished from this app. Route handlers are the only server. Client data access goes through TanStack Query hooks.
 
 ## After every edit
 

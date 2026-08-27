@@ -22,3 +22,9 @@ export function formatDate(value: string | null): string {
     timeZone: "UTC",
   }).format(new Date(value));
 }
+
+export function formatConfidence(value: number | null): string {
+  if (value == null) return "—";
+  if (value <= 1) return `${Math.round(value * 100)}%`;
+  return String(value);
+}

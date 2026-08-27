@@ -30,6 +30,7 @@ export default function TaxonomyDivisionsPage() {
         title="Engineering categories"
         items={data.engineeringCategories}
         hrefFor={(code) => `/research-capability?categoryCode=${encodeURIComponent(code)}`}
+        libraryHrefFor={(code) => `/research-capability/library/${encodeURIComponent(code)}`}
       />
       <DivisionBoard
         title="Application domains"
@@ -50,10 +51,12 @@ function DivisionBoard({
   title,
   items,
   hrefFor,
+  libraryHrefFor,
 }: {
   title: string;
   items: TaxonomyDivisionOption[];
   hrefFor?: (code: string) => string;
+  libraryHrefFor?: (code: string) => string;
 }) {
   return (
     <Card>
@@ -68,12 +71,24 @@ function DivisionBoard({
               <span className="font-mono text-muted-foreground">{item.appliedVideoCount}</span>
             </div>
           );
-          return hrefFor ? (
-            <Link key={item.code} href={hrefFor(item.code)} className="block hover:text-foreground">
-              {content}
-            </Link>
-          ) : (
-            <div key={item.code}>{content}</div>
+          return (
+            <div key={item.code} className="flex items-center justify-between gap-4">
+              {hrefFor ? (
+                <Link href={hrefFor(item.code)} className="min-w-0 flex-1 hover:text-foreground">
+                  {content}
+                </Link>
+              ) : (
+                <div className="min-w-0 flex-1">{content}</div>
+              )}
+              {libraryHrefFor ? (
+                <Link
+                  href={libraryHrefFor(item.code)}
+                  className="shrink-0 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  Library
+                </Link>
+              ) : null}
+            </div>
           );
         })}
       </CardContent>

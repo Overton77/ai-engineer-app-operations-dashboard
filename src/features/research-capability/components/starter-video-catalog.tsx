@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCatalogFilters } from "../context/catalog-filters-context";
 import { useStarterVideoCatalog } from "../hooks/use-starter-video-catalog";
 import { formatDate, formatDuration, formatStatus } from "../lib/format";
+import { WatchOnYouTube } from "./watch-on-youtube";
 
 export function StarterVideoCatalog() {
   const { data, isLoading, error } = useStarterVideoCatalog();
@@ -48,6 +49,7 @@ export function StarterVideoCatalog() {
             <TableHead>Category</TableHead>
             <TableHead>Domain</TableHead>
             <TableHead>Organization</TableHead>
+            <TableHead>Watch</TableHead>
             <TableHead className="text-right">Published</TableHead>
           </TableRow>
         </TableHeader>
@@ -79,6 +81,9 @@ export function StarterVideoCatalog() {
               <TableCell className="text-sm">{row.primaryDomainLabel ?? "—"}</TableCell>
               <TableCell className="text-sm">
                 {row.primaryOrganizationName ?? "—"}
+              </TableCell>
+              <TableCell className="text-sm">
+                <WatchOnYouTube videoId={row.videoId} storedUrl={row.url} />
               </TableCell>
               <TableCell className="text-right text-sm text-muted-foreground">
                 {formatDate(row.publishedAt)}

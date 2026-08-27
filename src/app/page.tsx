@@ -14,7 +14,12 @@ export default function DashboardHomePage() {
           tables as outputs, and pipeline completion as x of y qualified videos.
         </p>
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <HomeLink
+          href="/research-capability/library"
+          title="Pre-research library"
+          body="Read finished talks grouped by primary engineering category."
+        />
         <HomeLink
           href="/research-capability"
           title="Starter-video catalog"

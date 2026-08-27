@@ -19,6 +19,9 @@ The app uses Next.js 16.4 canary with `AGENTS.md`, `CLAUDE.md`, bundled docs at 
 
 - `/` dashboard shell
 - `/research-capability` starter-video catalog and pipeline progress
+- `/research-capability/library` finished-report reader, grouped by primary engineering category
+- `/research-capability/library/[categoryCode]` finished videos in that primary category
+- `/research-capability/library/[categoryCode]/[videoId]` one readable share report
 - `/research-capability/videos/[videoId]` one video as the operational unit
 - `/research-capability/taxonomy` taxonomy division boards
 - `/research-capability/tables/[tableKey]` allowlisted table browsers

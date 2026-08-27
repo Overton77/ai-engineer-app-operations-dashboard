@@ -99,7 +99,8 @@ All routes live under `/api/research-capability`. They are read-only Next.js App
 | --- | --- | --- |
 | `GET /pipeline-progress` | Finished / qualified / catalog counts plus `pipeline_status` breakdown | none |
 | `GET /taxonomy-divisions` | Category, application-domain, org-domain, form, difficulty, lifecycle lookups with applied-video counts | none |
-| `GET /starter-videos` | Paginated video anchors with latest-run status, primary category, primary domain, primary org | `q`, `pipelineStatus`, `finished`, `categoryCode`, `domainCode`, `difficulty`, `contentForm`, `page`, `pageSize` |
+| `GET /starter-videos` | Paginated video anchors with latest-run status, primary category, primary domain, primary org | `q`, `pipelineStatus`, `finished`, `categoryCode` (`uncategorized` = finished + applied + no primary), `domainCode`, `difficulty`, `contentForm`, `sort=library`, `page`, `pageSize` |
+| `GET /share-reports/:videoId` | Composed reader DTO for one finished applied video | none |
 | `GET /starter-videos/:videoId` | One video + video state + runs | none |
 | `GET /applied-outputs/:videoId` | Selected run's applied tables + artifact registry + packet inventory | `runId` optional |
 | `GET /table-rows/:tableKey` | Allowlisted table browser | `q`, `videoId`, `page`, `pageSize` |
@@ -118,6 +119,9 @@ TanStack Query owns client fetching. Catalog filters live in React context and U
 | --- | --- |
 | `/` | Dashboard shell. Research-capability is the first (and currently only) segment. |
 | `/research-capability` | Progress banner + taxonomy-division filters + searchable video catalog. |
+| `/research-capability/library` | Finished-report reader home: official engineering-category folders. |
+| `/research-capability/library/[categoryCode]` | Finished videos whose primary category is that folder. |
+| `/research-capability/library/[categoryCode]/[videoId]` | One share-report brief. Canonical URL is the current primary category. |
 | `/research-capability/videos/[videoId]` | One video as the operational unit: status, taxonomy, orgs, tech families, summaries, evidence, packet completeness. |
 | `/research-capability/taxonomy` | Division boards: category / domain / lifecycle / form / difficulty with video counts. |
 | `/research-capability/tables/[tableKey]` | Simple search-and-filter browsers for applied and orchestration tables. |
@@ -131,6 +135,7 @@ Feature code lives in `src/features/research-capability/`. Names follow the pipe
 - `starter-video-anchor` — one video as the unit of work
 - `applied-research-outputs` — executor-written tables for that video
 - `taxonomy-divisions` — the classification system
+- `share-report` — composed finished-report reader DTO
 - `research-table-catalog` — allowlist of exposable tables
 - `packet-artifacts` — durable intent-bucket objects
 

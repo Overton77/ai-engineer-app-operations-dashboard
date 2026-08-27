@@ -15,6 +15,7 @@ export async function GET(request: Request) {
         domainCode: readSearchParam(searchParams, "domainCode"),
         difficulty: readSearchParam(searchParams, "difficulty"),
         contentForm: readSearchParam(searchParams, "contentForm"),
+        sort: readSearchParam(searchParams, "sort") === "library" ? "library" : undefined,
         ...readPage(searchParams),
       }),
     );

@@ -37,6 +37,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <Link href="/research-capability" className="hover:text-foreground">
                   Research capability
                 </Link>
+                <Link href="/research-capability/library" className="hover:text-foreground">
+                  Library
+                </Link>
                 <Link href="/research-capability/taxonomy" className="hover:text-foreground">
                   Taxonomy
                 </Link>

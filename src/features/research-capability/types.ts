@@ -25,6 +25,11 @@ export type TaxonomyDivisionOption = {
   code: string;
   label: string;
   appliedVideoCount: number;
+  description?: string;
+  inclusionCriteria?: string[];
+  exclusionCriteria?: string[];
+  exampleTopics?: string[];
+  sortOrder?: number;
 };
 
 export type TaxonomyDivisions = {
@@ -44,6 +49,7 @@ export type StarterVideoCatalogFilters = {
   domainCode?: string;
   difficulty?: string;
   contentForm?: string;
+  sort?: "library";
   page: number;
   pageSize: number;
 };
@@ -143,4 +149,123 @@ export type TranscriptObject = {
   preview: string | null;
   text: string | null;
   charCount: number | null;
+};
+
+export type ShareReportAssignment = {
+  categoryCode: string;
+  label: string;
+  confidence: number | null;
+  rationale: string | null;
+};
+
+export type ShareReportDomain = {
+  domainCode: string;
+  label: string;
+  confidence: number | null;
+  rationale: string | null;
+};
+
+export type ShareReportOrganizationSource = {
+  title: string | null;
+  url: string | null;
+  sourceRole: string | null;
+  authorityTier: string | null;
+  verificationStatus: string | null;
+};
+
+export type ShareReportOrganization = {
+  canonicalName: string;
+  isPrimaryFeatured: boolean;
+  officialUrl: string | null;
+  authoritativeSummary: string | null;
+  organizationScope: string | null;
+  relationshipRoles: string[];
+  primaryDomainLabel: string | null;
+  currentStatus: string | null;
+  sources: ShareReportOrganizationSource[];
+};
+
+export type ShareReportTechnology = {
+  familyRank: number | null;
+  familyLabel: string;
+  primaryTechnology: string | null;
+  primaryTechnologyKind: string | null;
+  summary: string | null;
+  roleInVideo: string | null;
+  temporalStatus: string | null;
+  officialUrls: string[];
+  confidence: number | null;
+};
+
+export type ShareReport = {
+  schema: "pre-research-share-report/1.0.0";
+  video: {
+    videoId: string;
+    title: string;
+    description: string | null;
+    url: string;
+    publishedAt: string | null;
+    channelTitle: string | null;
+    durationSeconds: number | null;
+  };
+  pipeline: {
+    runId: string;
+    analysisId: string | null;
+    finishedAt: string | null;
+    researchAsOf: string | null;
+    modelId: string | null;
+    promptBundleVersion: string | null;
+  };
+  taxonomy: {
+    primary: ShareReportAssignment | null;
+    secondary: ShareReportAssignment[];
+    contentForm: string | null;
+    difficulty: string | null;
+    evidenceLevel: string | null;
+    overallConfidence: number | null;
+    domains: ShareReportDomain[];
+    lifecycleStages: string[];
+  };
+  summaries: {
+    transcriptOnly: string | null;
+    contextualized: string | null;
+    whyItMatters: string | null;
+    temporalContext: string | null;
+  };
+  keyTakeaways: string[];
+  organizations: ShareReportOrganization[];
+  technologies: ShareReportTechnology[];
+  curriculum: {
+    recommendedLearnerLevel: string | null;
+    prerequisites: string[];
+    learningOutcomes: string[];
+    curriculumRoles: string[];
+    challengeSeeds: string[];
+  };
+  entities: Array<{
+    entityKind: string;
+    name: string;
+    canonicalUrl: string | null;
+    verificationStatus: string | null;
+    relationshipToVideo: string | null;
+  }>;
+  resources: Array<{
+    resourceType: string;
+    title: string;
+    url: string | null;
+    whyValuable: string | null;
+    verificationStatus: string | null;
+    isFirstParty: boolean | null;
+  }>;
+  evidence: Array<{
+    evidenceId: string;
+    sourceKind: string;
+    shortExcerpt: string | null;
+    supports: string | null;
+  }>;
+  webSearches: Array<{
+    subagent: string | null;
+    query: string | null;
+    searchPurpose: string | null;
+  }>;
 };

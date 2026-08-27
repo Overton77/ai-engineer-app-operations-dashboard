@@ -4,6 +4,7 @@ import type {
   ResearchVideoAnalysis,
 } from "@aiengineer/database-contract/pre-research";
 import type { StarterVideoCatalogFilters, StarterVideoCatalogPage } from "../types";
+import { UNCATEGORIZED_CATEGORY_CODE } from "../lib/library-paths";
 import { queryResearchCapability } from "./postgres";
 import { asBoolean, asIso, asNumber, asText } from "./serialize";
 
@@ -51,7 +52,12 @@ export async function readStarterVideoCatalog(
   if (filters.finished === false) {
     where.push("not coalesce(s.pre_research_pipeline_finished, false)");
   }
-  if (filters.categoryCode) {
+  if (filters.categoryCode === UNCATEGORIZED_CATEGORY_CODE) {
+    where.push("primary_cat.category_code is null");
+    where.push("coalesce(s.pre_research_pipeline_finished, false)");
+    where.push("s.pipeline_status = 'finished'");
+    where.push("latest_run.status = 'applied'");
+  } else if (filters.categoryCode) {
     push("primary_cat.category_code::text = ?", filters.categoryCode);
   }
   if (filters.domainCode) {
@@ -151,11 +157,15 @@ export async function readStarterVideoCatalog(
        primary_org.canonical_name as primary_organization_name
      ${fromSql}
      ${whereSql}
-     order by
+     ${
+       filters.sort === "library"
+         ? "order by v.published_at asc nulls last, v.video_id"
+         : `order by
        coalesce(s.pre_research_pipeline_finished, false) desc,
        s.pre_research_pipeline_finished_at desc nulls last,
        v.published_at desc nulls last,
-       v.video_id
+       v.video_id`
+     }
      ${limitSql}`,
     values,
   );

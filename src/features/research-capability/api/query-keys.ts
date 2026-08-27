@@ -10,6 +10,7 @@ export const researchCapabilityKeys = {
     [...researchCapabilityKeys.all, "starter-video", videoId] as const,
   appliedOutputs: (videoId: string, runId?: string) =>
     [...researchCapabilityKeys.all, "applied-outputs", videoId, runId ?? "latest"] as const,
+  shareReport: (videoId: string) => [...researchCapabilityKeys.all, "share-report", videoId] as const,
   tableRows: (tableKey: string, q?: string, videoId?: string, page?: number) =>
     [...researchCapabilityKeys.all, "table-rows", tableKey, q ?? "", videoId ?? "", page ?? 1] as const,
 };

@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppliedResearchOutputs } from "../hooks/use-applied-research-outputs";
 import { useStarterVideoAnchor } from "../hooks/use-starter-video-anchor";
 import { formatDate, formatStatus } from "../lib/format";
+import { canonicalLibraryCategoryCode, libraryReportPath } from "../lib/library-paths";
+import { WatchOnYouTube } from "./watch-on-youtube";
 
 export function AppliedOutputsWorkspace({ videoId }: { videoId: string }) {
   const anchor = useStarterVideoAnchor(videoId);
@@ -24,6 +26,14 @@ export function AppliedOutputsWorkspace({ videoId }: { videoId: string }) {
   const video = anchor.data.video;
   const state = anchor.data.videoState;
   const applied = outputs.data;
+  const primaryCategoryAssignment = (applied?.categoryAssignments ?? []).find(
+    (row) => row.assignment_role === "primary",
+  );
+  const libraryCategoryCode = canonicalLibraryCategoryCode(
+    typeof primaryCategoryAssignment?.category_code === "string"
+      ? primaryCategoryAssignment.category_code
+      : null,
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -37,10 +47,14 @@ export function AppliedOutputsWorkspace({ videoId }: { videoId: string }) {
           <Badge variant={video.preResearchComplete ? "default" : "outline"}>
             {video.preResearchComplete ? "completed" : formatStatus(String(state?.pipeline_status ?? "unknown"))}
           </Badge>
-          {video.url ? (
-            <a href={video.url} className="hover:underline" target="_blank" rel="noreferrer">
-              YouTube
-            </a>
+          <WatchOnYouTube videoId={video.videoId} storedUrl={video.url} />
+          {video.preResearchComplete ? (
+            <Link
+              href={libraryReportPath(libraryCategoryCode, video.videoId)}
+              className="hover:underline"
+            >
+              Open library report
+            </Link>
           ) : null}
           <span>Published {formatDate(video.publishedAt)}</span>
         </div>

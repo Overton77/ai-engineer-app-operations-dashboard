@@ -2,6 +2,7 @@ import type {
   AppliedResearchOutputs,
   PipelineProgress,
   ResearchTablePage,
+  ShareReport,
   StarterVideoAnchor,
   StarterVideoCatalogFilters,
   StarterVideoCatalogPage,
@@ -28,6 +29,7 @@ function catalogQuery(filters: StarterVideoCatalogFilters) {
   if (filters.domainCode) params.set("domainCode", filters.domainCode);
   if (filters.difficulty) params.set("difficulty", filters.difficulty);
   if (filters.contentForm) params.set("contentForm", filters.contentForm);
+  if (filters.sort) params.set("sort", filters.sort);
   params.set("page", String(filters.page));
   params.set("pageSize", String(filters.pageSize));
   return params.toString();
@@ -51,6 +53,10 @@ export const researchCapabilityFetchers = {
       `/api/research-capability/applied-outputs/${encodeURIComponent(videoId)}${
         runId ? `?runId=${encodeURIComponent(runId)}` : ""
       }`,
+    ),
+  shareReport: (videoId: string) =>
+    readEnvelope<ShareReport>(
+      `/api/research-capability/share-reports/${encodeURIComponent(videoId)}`,
     ),
   tableRows: (tableKey: string, q?: string, videoId?: string, page = 1) => {
     const params = new URLSearchParams({ page: String(page), pageSize: "40" });
