@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { Suspense } from "react";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { QueryProvider } from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,43 +18,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agents dashboard",
-  description: "Research and capability proof surface for the AI Engineer agents.",
+  title: "AI Engineer / Pre-research",
+  description: "Finished pre-research briefs for AI Engineer conference videos.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
-        <QueryProvider>
-          <header className="border-b border-border">
-            <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-4">
-              <Link href="/" className="text-sm font-semibold tracking-tight">
-                Agents dashboard
-              </Link>
-              <nav className="flex gap-5 text-sm text-muted-foreground">
-                <Link href="/research-capability" className="hover:text-foreground">
-                  Research capability
+        <ThemeProvider>
+          <QueryProvider>
+            <header className="border-b border-border">
+              <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-3">
+                <Link
+                  href="/"
+                  className="font-mono text-[13px] font-medium uppercase tracking-[0.16em]"
+                >
+                  AI Engineer / Pre-research
                 </Link>
-                <Link href="/research-capability/library" className="hover:text-foreground">
-                  Library
-                </Link>
-                <Link href="/research-capability/taxonomy" className="hover:text-foreground">
-                  Taxonomy
-                </Link>
-                <Link href="/research-capability/tables/pipeline-runs" className="hover:text-foreground">
-                  Tables
-                </Link>
-              </nav>
-            </div>
-          </header>
-          <Suspense>
-            <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-8">{children}</main>
-          </Suspense>
-        </QueryProvider>
+                <nav className="flex items-center gap-2">
+                  <Link
+                    href="/"
+                    className="font-mono text-[13px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground"
+                  >
+                    Talks
+                  </Link>
+                  <ThemeSwitcher />
+                </nav>
+              </div>
+            </header>
+            <Suspense>
+              <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-8">{children}</main>
+            </Suspense>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

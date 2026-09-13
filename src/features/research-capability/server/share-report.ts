@@ -1,4 +1,5 @@
 import type { ShareReport } from "../types";
+import { catalogChannelScopeSql } from "../lib/research-channels";
 import { youtubeWatchUrl } from "../lib/youtube";
 import { queryResearchCapability } from "./postgres";
 import { asBoolean, asDateOnly, asIso, asNumber, asStringArray, asText } from "./serialize";
@@ -11,6 +12,9 @@ type EligibleVideoRow = {
   published_at: Date | string | null;
   channel_title: string | null;
   duration_seconds: number | null;
+  view_count: number | null;
+  like_count: number | null;
+  thumbnail_url: string | null;
   run_id: string;
   analysis_id: string | null;
   finished_at: Date | string | null;
@@ -156,6 +160,9 @@ async function loadLibraryEligibleVideo(videoId: string): Promise<EligibleVideoR
        v.published_at,
        v.channel_title,
        v.duration_seconds,
+       v.view_count,
+       v.like_count,
+       v.thumbnail_url,
        r.run_id,
        a.analysis_id,
        s.pre_research_pipeline_finished_at as finished_at,
@@ -176,12 +183,14 @@ async function loadLibraryEligibleVideo(videoId: string): Promise<EligibleVideoR
        a.overall_confidence
      from public.research_pre_research_video_state s
      join public.research_starter_videos v on v.video_id = s.video_id
+     left join public.research_starter_channels c on c.channel_id = v.channel_id
      join public.research_pre_research_run r on r.run_id = s.latest_run_id
      left join public.research_video_analysis a on a.run_id = r.run_id
      where v.video_id = $1
        and s.pre_research_pipeline_finished
        and s.pipeline_status = 'finished'
-       and r.status = 'applied'`,
+       and r.status = 'applied'
+       and ${catalogChannelScopeSql()}`,
     [videoId],
   );
   return video ?? null;
@@ -393,6 +402,9 @@ function composeShareReport(video: EligibleVideoRow, slices: ShareReportSlices):
       publishedAt: asIso(video.published_at),
       channelTitle: asText(video.channel_title),
       durationSeconds: asNumber(video.duration_seconds),
+      viewCount: asNumber(video.view_count),
+      likeCount: asNumber(video.like_count),
+      thumbnailUrl: asText(video.thumbnail_url),
     },
     pipeline: {
       runId: video.run_id,

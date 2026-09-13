@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "generator": {
+    "version": "1.1.0",
+    "sha256": "cb208742acb089bbe2135a8736952103c2d810fadcc35b67d46484b8ea954efc",
+    "semanticSha256": "f5a073b4b82968f65af11c2ad4c5332f971792185c033f28f412cbfd0ee55dd2"
+  },
+  "sourceState": "Filesystem snapshot; may include uncommitted changes. No deployment or commit claim.",
+  "inputs": {
+    ".agent-docs/config.json": "5bd30dbb74b2a9ce3d35a80addea28bccb97e36148bf14c327c6be4439933782",
+    "README.md": "fb5cfd5c94a782c6c94a06d2e56d4d759d4e9a0edc0db70699f1e4d004a3af1b",
+    "RESEARCH_CAPABILITY_PLAN.md": "fbd440dfe4383f2e2c1c6ae09770d2d7e2e22bee9fab74aa9def4b12b596ba51",
+    "package.json": "51bc5bc89968e7cd7e95ab481865504c0a9592772f3aad8e383c5efa78f35c3f"
+  },
+  "semantic": {
+    "inputs": {
+      ".agent-docs/modules.json": "2ba2d89b7a2a5fd351b18fc8313214dd5fb2658e0556b90761aa1ba825563364",
+      "src/app/layout.tsx": "11c8247fee03f25d22bf67f042f6bfcdbb8ec1cbd4a200822a3220cfb62c0fef",
+      "src/app/page.tsx": "9635530d651d84380dad4d2194a3e995f14e5629d1c8c9343cb0ac880fd173dc",
+      "src/features/research-capability/hooks/use-pipeline-progress.ts": "40c64ea74dfbe212a8564502b7243f661548f3495e8bb62f37570d72afc54859",
+      "src/features/research-capability/server/packet-artifacts.ts": "eadf973b61bc2591bc0ca8d4410a7a921be384db057717545a2c5f2a74b91049",
+      "src/features/research-capability/server/pipeline-progress.ts": "7d8e02beedae45996d0a3512c3f0c0405994aaceb215c2f186a9bfa229f37105",
+      "src/features/research-capability/types.ts": "3556cf2639caca1dce1215c8b820c44a213fb3c9df4aeaf5504db615409f7f55",
+      "src/providers/query-provider.tsx": "1af46e58a3867368d9d5d2835205c9ec3c9b5eccc1b58df9fea45b378376554b"
+    },
+    "inventories": {}
+  }
+}

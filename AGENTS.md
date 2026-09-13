@@ -27,3 +27,46 @@ The **library** (`/research-capability/library`) is the finished-report reader; 
 
 Verify the changed page against a running `pnpm dev` using the `next-dev-loop` skill.
 
+
+<!-- BEGIN GENERATED: agent-docs -->
+## Repository guide
+
+Research and capability proof UI over the pre-research ledger and stored packet artifacts.
+
+Lifecycle: Existing research operations surface; relationship to Mission Control dashboard remains open.
+
+Read the relevant documents below before changing behavior. Inspect more-specific AGENTS.md files in the destination directory. Accepted docs record settled decisions; proposed, reference, and deprecated docs are labelled context. The map is navigation, not proof of implementation or deployment.
+
+- Do not mark pre-research complete from the UI. Use the database completion state, not local output folders.
+- Read the relevant installed Next.js documentation before framework changes. Route handlers own server access; use TanStack Query hooks for client data.
+- Do not query learner tables from aiengineerapp.
+- Shared Supabase migrations and generated database types are owned by ai-engineer-db-contract; consume its pinned contract. Do not create another migration/type authority.
+- Search explicit source paths first. Do not recursively enumerate artifacts, outputs, runs, receipts, caches, dependencies, or private notes. Read an individual artifact only when the task calls for it.
+
+### Code navigation
+
+Read `docs/agents/CODE-MAP.md` for source entrypoints, interfaces, dependencies, tests, and architecture by module.
+
+- `src/app/AGENTS.md`: Next.js routes and application shell.
+- `src/features/AGENTS.md`: Research capability feature implementation.
+- `src/providers/AGENTS.md`: Client data-provider configuration.
+- Change pipeline status display: research-capability → app-routes
+- Change client query behavior: query-provider → research-capability
+
+### Task routes
+
+- App scope, routes, setup: `README.md`
+- Research capability data map and API: `RESEARCH_CAPABILITY_PLAN.md`
+
+### Validation
+
+Run from this repository root; choose checks relevant to the change. Commands are documented here, never executed by the documentation updater.
+
+- `pnpm lint`
+- `pnpm build`
+
+Documentation: `node .agent-docs/cli.mjs check --repo .`; refresh with `node .agent-docs/cli.mjs build --repo .`. Edit `.agent-docs/config.json` to change this guide.
+
+[Docs index]|root:.
+|.:{README.md,RESEARCH_CAPABILITY_PLAN.md}
+<!-- END GENERATED: agent-docs -->

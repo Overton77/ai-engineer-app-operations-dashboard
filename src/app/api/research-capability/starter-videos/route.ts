@@ -1,5 +1,6 @@
 import { jsonData, jsonError, readPage, readSearchParam } from "@/features/research-capability/server/http";
 import { readStarterVideoCatalog } from "@/features/research-capability/server/starter-video-catalog";
+import { parseCatalogSort } from "@/features/research-capability/types";
 
 export async function GET(request: Request) {
   try {
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
         domainCode: readSearchParam(searchParams, "domainCode"),
         difficulty: readSearchParam(searchParams, "difficulty"),
         contentForm: readSearchParam(searchParams, "contentForm"),
-        sort: readSearchParam(searchParams, "sort") === "library" ? "library" : undefined,
+        sort: parseCatalogSort(readSearchParam(searchParams, "sort")),
         ...readPage(searchParams),
       }),
     );

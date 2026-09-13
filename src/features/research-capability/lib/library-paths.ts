@@ -22,3 +22,7 @@ export function libraryReportPath(categoryCode: string, videoId: string) {
 export function pipelineWorkspacePath(videoId: string) {
   return `/research-capability/videos/${encodeURIComponent(videoId)}`;
 }
+
+export function videoShowcasePath(videoId: string) {
+  return `/videos/${encodeURIComponent(videoId)}`;
+}

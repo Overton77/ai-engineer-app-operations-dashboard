@@ -1,8 +1,9 @@
-import { LibraryShareReport } from "@/features/research-capability/components/library-share-report";
+import { redirect } from "next/navigation";
+import { videoShowcasePath } from "@/features/research-capability/lib/library-paths";
 
 export default async function LibraryShareReportPage({
   params,
 }: PageProps<"/research-capability/library/[categoryCode]/[videoId]">) {
-  const { categoryCode, videoId } = await params;
-  return <LibraryShareReport categoryCode={categoryCode} videoId={videoId} />;
+  const { videoId } = await params;
+  redirect(videoShowcasePath(videoId));
 }

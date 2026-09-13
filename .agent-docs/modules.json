@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "path": "src/app",
+      "summary": "Next.js routes and application shell.",
+      "inventory": "none"
+    },
+    {
+      "path": "src/features",
+      "summary": "Research capability feature implementation.",
+      "inventory": "none"
+    },
+    {
+      "path": "src/providers",
+      "summary": "Client data-provider configuration.",
+      "inventory": "none"
+    }
+  ],
+  "modules": [
+    {
+      "id": "app-routes",
+      "path": "src/app",
+      "kind": "module",
+      "state": "implemented",
+      "summary": "Next.js dashboard shell, research-capability pages, and API routes.",
+      "entrypoints": [
+        "src/app/layout.tsx",
+        "src/app/page.tsx"
+      ],
+      "interface": [
+        "Next.js route entry points."
+      ],
+      "tests": [],
+      "constraints": [],
+      "uses": [
+        "research-capability"
+      ]
+    },
+    {
+      "id": "research-capability",
+      "path": "src/features/research-capability",
+      "kind": "module",
+      "state": "implemented",
+      "summary": "Pre-research catalog, pipeline progress, stored packets, and applied-output views.",
+      "entrypoints": [
+        "src/features/research-capability/types.ts",
+        "src/features/research-capability/server/pipeline-progress.ts",
+        "src/features/research-capability/server/packet-artifacts.ts",
+        "src/features/research-capability/hooks/use-pipeline-progress.ts"
+      ],
+      "interface": [
+        "Server data helpers and TanStack Query hooks."
+      ],
+      "tests": [],
+      "constraints": [
+        "Use canonical database completion state; this UI does not mark the pipeline finished."
+      ],
+      "uses": []
+    },
+    {
+      "id": "query-provider",
+      "path": "src/providers",
+      "kind": "module",
+      "state": "implemented",
+      "summary": "Client TanStack Query provider.",
+      "entrypoints": [
+        "src/providers/query-provider.tsx"
+      ],
+      "interface": [
+        "Query provider wrapping client views."
+      ],
+      "tests": [],
+      "constraints": [],
+      "uses": []
+    }
+  ],
+  "routes": [
+    {
+      "task": "Change pipeline status display",
+      "modules": [
+        "research-capability",
+        "app-routes"
+      ]
+    },
+    {
+      "task": "Change client query behavior",
+      "modules": [
+        "query-provider",
+        "research-capability"
+      ]
+    }
+  ]
+}

@@ -41,6 +41,13 @@ export type TaxonomyDivisions = {
   lifecycleStages: TaxonomyDivisionOption[];
 };
 
+export type CatalogSort =
+  | "library"
+  | "published_desc"
+  | "published_asc"
+  | "likes_desc"
+  | "views_desc";
+
 export type StarterVideoCatalogFilters = {
   q?: string;
   pipelineStatus?: string;
@@ -49,7 +56,7 @@ export type StarterVideoCatalogFilters = {
   domainCode?: string;
   difficulty?: string;
   contentForm?: string;
-  sort?: "library";
+  sort?: CatalogSort;
   page: number;
   pageSize: number;
 };
@@ -62,6 +69,8 @@ export type StarterVideoCatalogRow = {
   url: string | null;
   thumbnailUrl: string | null;
   channelTitle: string | null;
+  viewCount: number | null;
+  likeCount: number | null;
   transcriptStatus: string;
   transcriptPath: string | null;
   preResearchComplete: boolean;
@@ -78,6 +87,19 @@ export type StarterVideoCatalogRow = {
   contentForm: string | null;
   primaryOrganizationName: string | null;
 };
+
+export function parseCatalogSort(value: string | undefined | null): CatalogSort | undefined {
+  switch (value) {
+    case "library":
+    case "published_desc":
+    case "published_asc":
+    case "likes_desc":
+    case "views_desc":
+      return value;
+    default:
+      return undefined;
+  }
+}
 
 export type StarterVideoCatalogPage = {
   rows: StarterVideoCatalogRow[];
@@ -207,6 +229,9 @@ export type ShareReport = {
     publishedAt: string | null;
     channelTitle: string | null;
     durationSeconds: number | null;
+    viewCount: number | null;
+    likeCount: number | null;
+    thumbnailUrl: string | null;
   };
   pipeline: {
     runId: string;

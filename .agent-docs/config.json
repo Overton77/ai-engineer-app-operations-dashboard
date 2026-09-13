@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "id": "agents_dashboard",
+  "purpose": "Research and capability proof UI over the pre-research ledger and stored packet artifacts.",
+  "lifecycle": "Existing research operations surface; relationship to Mission Control dashboard remains open.",
+  "budgetBytes": 8192,
+  "rules": [
+    "Do not mark pre-research complete from the UI. Use the database completion state, not local output folders.",
+    "Read the relevant installed Next.js documentation before framework changes. Route handlers own server access; use TanStack Query hooks for client data.",
+    "Do not query learner tables from aiengineerapp.",
+    "Shared Supabase migrations and generated database types are owned by ai-engineer-db-contract; consume its pinned contract. Do not create another migration/type authority.",
+    "Search explicit source paths first. Do not recursively enumerate artifacts, outputs, runs, receipts, caches, dependencies, or private notes. Read an individual artifact only when the task calls for it."
+  ],
+  "commands": [
+    "pnpm lint",
+    "pnpm build"
+  ],
+  "docs": [
+    {
+      "path": "README.md",
+      "task": "App scope, routes, setup",
+      "modules": [
+        "app-routes",
+        "research-capability",
+        "query-provider"
+      ]
+    },
+    {
+      "path": "RESEARCH_CAPABILITY_PLAN.md",
+      "task": "Research capability data map and API",
+      "modules": [
+        "research-capability"
+      ]
+    }
+  ],
+  "watch": [
+    "package.json"
+  ],
+  "decisions": [
+    "Decide whether this proof UI stays separate from Mission Control's debugger; no retirement is implied."
+  ],
+  "ciWorkflow": ".github/workflows/agent-docs.yml",
+  "codeMap": ".agent-docs/modules.json"
+}
